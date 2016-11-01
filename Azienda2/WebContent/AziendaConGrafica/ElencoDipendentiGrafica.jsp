@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
-   <jsp:useBean id="admin" class="bean.AdminBean" scope="session"></jsp:useBean>
+<%@page import="ServizioAzienda.ServizioAzienda"%>
+<%@page import="bean.DipendenteBean"%>
+<%@page import="java.util.List"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
+	
+	<jsp:useBean id="utente" class="bean.UtenteBean" scope="session"></jsp:useBean>
     
 <!--        header di pagina  -->
 <jsp:include page="headerHTML.jsp"></jsp:include>
@@ -41,7 +48,72 @@
 <div class="alert alert-info">
                 <h4>Elenco Dipendenti</h4>
             </div>
-   <jsp:include page="tabellaElenchi.jsp"></jsp:include>
+   
+   
+   
+   
+   <div class="box col-md-12" >
+    <div class="box-inner" >
+
+    <table class="box-header well">
+    <thead >
+    <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Username</th>
+        <th>Posizine</th>
+        <th>Stipendio</th>
+        <th>Actions</th>
+        
+    </tr>
+    </thead>
+    
+    <%
+    	ServizioAzienda sA=new ServizioAzienda();
+    	String username=utente.getUsername();
+    	List<DipendenteBean> listaDipendenti=sA.getTuttiDipendenti();
+    	session.setAttribute("listaDipendenti", listaDipendenti);
+    
+    %>
+    
+    <c:set var="i" value="1" scope="page"/>
+    <c:forEach items="${listaDipendenti}" var="u">
+    
+    <tbody>
+    <tr>
+    	
+        <td class="center"><c:out value="${i}"/></td>
+        <td class="center"> <c:out value="${u.nome}"/></td>
+        <td class="center"><c:out value="${u.cognome}"/></td>
+        <td class="center"><c:out value="${u.username}"/></td>
+        <td class="center"><c:out value="${u.posizione}"/></td>
+        <td class="center"><c:out value="${u.stipendio}"/></td>
+        <td class="center">
+            <a class="btn btn-success" href="#">
+                <i class="glyphicon glyphicon-zoom-in icon-white"></i>
+                View
+            </a>
+            <a class="btn btn-info" href="#">
+                <i class="glyphicon glyphicon-edit icon-white"></i>
+                Edit
+            </a>
+            <a class="btn btn-danger" href="#">
+                <i class="glyphicon glyphicon-trash icon-white"></i>
+                Delete
+            </a>
+        </td>
+    </tr>
+    <c:set var="i" value="${i+1}" scope="page"/>
+   </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
+           
+        <!--/span-->
+
+    </div><hr>
+   
    
 
   

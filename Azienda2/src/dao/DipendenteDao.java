@@ -53,7 +53,7 @@ public class DipendenteDao {
 			tx.begin();
 
 
-			Query query= session.createQuery("from UTENTEBEAN where username=:user");
+			Query query= session.createQuery("from DipendenteBean where username=:user");
 			query.setString("user", username);
 			d=(DipendenteBean) query.uniqueResult();
 			
@@ -105,7 +105,7 @@ public class DipendenteDao {
 			tx=session.getTransaction();
 			tx.begin();
 			
-			Query query= session.createQuery("from Utentebean where username=:user");
+			Query query= session.createQuery("from DipendenteBean where username=:user");
 			query.setString("user", dVecchio.getUsername());
 			dV=(DipendenteBean) query.uniqueResult();
 			session.update(dV);

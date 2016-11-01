@@ -2,6 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
+
     <jsp:useBean id="dipendente" class="bean.DipendenteBean"
 	scope="session"></jsp:useBean>
 	
@@ -34,6 +37,30 @@
                 <h3>Registrazione Nuovo Dipendente</h3>
             </div>
              
+   
+   
+    <% 
+            if(request.getSession().getAttribute("message")!=null){
+            	%>
+            	
+            	
+            	
+            	<div class="box-content alerts">
+                
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p>${message}
+                <c:remove var="message" scope="session" /></p>
+                </div>
+               
+            </div>
+            	
+            	
+            	<%
+            }
+            %>
+   
+   
    
    
    <form action="../doRegistraDipendente.jsp" method="post">

@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    
+
    <jsp:useBean id="admin" class="bean.AdminBean" scope="session"></jsp:useBean>
-    <jsp:useBean id="mex" class="utility.ErroreBean" scope="request"></jsp:useBean>
+    
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!--        header di pagina  -->
 <jsp:include page="./headerHTML.jsp"></jsp:include>
     
@@ -19,7 +21,7 @@
 
         <div id="content" class="col-lg-10 col-sm-10">
             <!-- content starts -->
-            <h4><%=mex.getMex() %></h4>
+            
             <div>
   <ul class="breadcrumb">
         <li>
@@ -39,13 +41,31 @@
    
       <div class="alert alert-info">
                 <h1 >Welcome ${admin.nome}</h1>
-               
-                
-                
-                
-                
-                
+               	 
             </div>
+            
+            
+            
+            <% 
+            if(request.getSession().getAttribute("message")!=null){
+            	%>
+            	
+            	
+            	
+            	<div class="box-content alerts">
+                
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p>${message}
+                <c:remove var="message" scope="session" /></p>
+                </div>
+               
+            </div>
+            	
+            	
+            	<%
+            }
+            %>
 	
   
 

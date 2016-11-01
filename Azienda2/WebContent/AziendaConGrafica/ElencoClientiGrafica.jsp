@@ -32,18 +32,8 @@
         </noscript>
 
         <div id="content" class="col-lg-10 col-sm-10">
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
-           
+           <!-- content starts -->
+
            
             <div>
     <ul class="breadcrumb">

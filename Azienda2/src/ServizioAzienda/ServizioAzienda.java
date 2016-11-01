@@ -82,14 +82,14 @@ public class ServizioAzienda {
 		return listaClient;
 	}
 	
-//	//metodo per leggere elenco dipendenti
-//	
-//		public List<DipendenteBean> getTuttiDipendenti(){
-//			List <DipendenteBean> listaDipendenti=dDao.getAllDipendenti();
-//			return listaDipendenti;
-//		}
-//		
-//	
+	//metodo per leggere elenco dipendenti
+	
+		public List<DipendenteBean> getTuttiDipendenti(){
+			List <DipendenteBean> listaDipendenti=dDao.getAllDipendenti();
+			return listaDipendenti;
+		}
+		
+	
 //		public AdminBean leggiAdmin(String username) {
 //			AdminBean a =adao.trovaAdmin(username);
 //			return a;

@@ -10,8 +10,8 @@
 	<jsp:useBean id="utente" class="bean.UtenteBean" scope="request"></jsp:useBean>
 	<jsp:setProperty property="*" name="utente"/>
 	
-<jsp:useBean id="mex" class="utility.ErroreBean" scope="request"></jsp:useBean>
-	
+<jsp:useBean id="mex" class="utility.MessageBean" scope="request"></jsp:useBean>
+	<jsp:setProperty property="*" name="mex"/>
 
 	<%
 	ServizioAzienda sA= new ServizioAzienda();
@@ -33,23 +33,16 @@
        
         sA.creazioneRubrica(cliente.getUsername());
         
-        
-        
-        String redirectURL = "./AziendaConGrafica/HomePageAdmin.jsp";
-      
-        response.sendRedirect(redirectURL);
-        mex.setMex("Registrazione effettuata con successo");
-        
-    	
-        %>
-      
+        String message = "Registrazione effettuata con successo";
+        request.getSession().setAttribute("message", message);
+        response.sendRedirect("./AziendaConGrafica/HomePageAdmin.jsp");
   
-    <%
     }
     else{
-    	mex.setMex("Username già utilizzato o dati non validi");
-    	String redirectURL = "./AziendaConGrafica/registraClienteGrafica.jsp";
-    	response.sendRedirect(redirectURL);
+    	String message = "Username già utilizzato o dati non validi";
+        request.getSession().setAttribute("message", message);
+        response.sendRedirect("./AziendaConGrafica/registraClienteGrafica.jsp");
+    
     
     }
 

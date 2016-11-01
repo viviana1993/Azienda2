@@ -1,15 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
+
     <jsp:useBean id="cliente" class="bean.ClienteBean"
 	scope="session"></jsp:useBean>
-	<jsp:useBean id="mex" class="utility.ErroreBean" scope="request"></jsp:useBean>
+	<jsp:useBean id="mex" class="utility.MessageBean" scope="request"></jsp:useBean>
 <!--        header di pagina  -->
+
 <jsp:include page="headerHTML.jsp"></jsp:include>
     
     <!-- nav bar starts -->
     <jsp:include page="navBarAdmin.jsp"></jsp:include>
-    
+     
     <div class="ch-container">
     <div class="row">
         
@@ -31,10 +35,36 @@
             
             <div class="alert alert-info">
                 <h3>Registrazione Nuovo Cliente<br>
-                <%=mex.getMex() %>
+
                 </h3>
-                
+               
             </div>
+            
+            
+                 
+                
+                <% 
+            if(request.getSession().getAttribute("message")!=null){
+            	%>
+            	
+            	
+            	
+            	<div class="box-content alerts">
+                
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p>${message}
+                <c:remove var="message" scope="session" /></p>
+                </div>
+               
+            </div>
+            	
+            	
+            	<%
+            }
+            %>
+                
+    
              
    
    
