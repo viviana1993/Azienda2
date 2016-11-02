@@ -4,9 +4,11 @@ import java.util.List;
 
 import model.Rubrica;
 import utility.CodificationOfPassword;
+import bean.AdminBean;
 import bean.ClienteBean;
 import bean.DipendenteBean;
 import bean.UtenteBean;
+import dao.AdminDao;
 import dao.ClienteDao;
 import dao.DipendenteDao;
 import dao.RubricaDao;
@@ -18,7 +20,7 @@ public class ServizioAzienda {
 	UtenteDao uDao=new UtenteDao();
 	ClienteDao cDao=new ClienteDao();
 	DipendenteDao dDao=new DipendenteDao();
-//	AdminDao adao= new AdminDao();
+	AdminDao adao= new AdminDao();
 
 	RubricaDao rDao=new RubricaDao();
 //	VoceDao vdao= new VoceDao();
@@ -90,11 +92,11 @@ public class ServizioAzienda {
 		}
 		
 	
-//		public AdminBean leggiAdmin(String username) {
-//			AdminBean a =adao.trovaAdmin(username);
-//			return a;
-//		}
-//		
+		public AdminBean leggiAdmin(String username) {
+			AdminBean a =adao.trovaAdmin(username);
+			return a;
+		}
+		
 //		public ClienteBean leggiCliente(String username) {
 //			ClienteBean c =cDao.trovaCliente(username);
 //			return c;

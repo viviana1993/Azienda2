@@ -3,12 +3,12 @@
 <%@page import="bean.UtenteBean"%>
 
 <%@page import="ServizioAzienda.ServizioAzienda"%>
-<%@page import="utility.ErroreBean"%>
+<%@page import="utility.MessageBean"%>
 
 <jsp:useBean id="utente" class="bean.UtenteBean" scope="session"></jsp:useBean>
 	<jsp:setProperty property="*" name="utente"/>
 
-<jsp:useBean id="errore" class="utility.ErroreBean" scope="request"></jsp:useBean>
+<jsp:useBean id="mex" class="utility.MessageBean" scope="request"></jsp:useBean>
 	
 	<%
 	ServizioAzienda sA= new ServizioAzienda();
@@ -17,52 +17,42 @@
 	UtenteBean uBean= sA.trovaUtente(username);
 	
 	String password=request.getParameter("password");
-   	password=sA.conversionePass(password);
+    String pass=sA.conversionePass(password);
     
-	if(uBean!=null && uBean.getPassword().equals(password)){
+	if(uBean!=null && uBean.getPassword().equals(pass)){
 		
 		char ruolo=uBean.getRuolo();
 		utente.setNome(uBean.getNome());
 		utente.setCognome(uBean.getCognome());
 		utente.setRuolo(ruolo);
-		
-		
+		utente.setPassword(password);
+		utente.setId_utente(uBean.getId_utente());
+		utente.setUsername(username);
 		
 		switch(ruolo){
 		case 'A':
-			%>
-			
-			<jsp:forward page="Admin/HomePageAdmin.jsp"/>
-			
-			<%
+			response.sendRedirect("./AziendaConGrafica/HomePageAdmin.jsp");
 			break;
 		
 		case 'C':
-			%>
-			
-			<jsp:forward page="Cliente/HomePageCliente.jsp"/>
-			
-			<%
+			response.sendRedirect("./AziendaConGrafica/HomePageCliente.jsp");
+	
 			break;
 			
 			
 		case 'D':
-			%>
+			response.sendRedirect("./AziendaConGrafica/HomePageDipendente.jsp");
 			
-			<jsp:forward page="Dipendente/HomePageDipendente.jsp"/>
+//  			%><jsp:forward page="HomePageDipendente.jsp"/><% 
 			
-			<%
+		
 			break;
 		
 		}
 	}else{
-		errore.setMex("Username o password errati");
-	
-		%>
-		
-		<jsp:forward page="login.jsp" />
-		
-		<%
+		String message = "Username o password errati";
+        request.getSession().setAttribute("message", message);
+		response.sendRedirect("./AziendaConGrafica/login.jsp");
 	
 	}
 	

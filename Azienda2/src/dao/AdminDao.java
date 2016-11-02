@@ -46,32 +46,32 @@ public class AdminDao {
 		
 		
 		
-//		//2-Trova admin per username
-//		public AdminBean trovaAdmin(long id_a)
-//		{
-//			AdminBean a=null;
-//			Session session =HibernateUtil.openSession();
-//			Transaction tx=null;
-//
-//			try{
-//				tx=session.getTransaction();
-//				tx.begin();
-//
-//
-//				Query query= session.createQuery("from AdminBean where id=:idAdmin");
-//				query.setLong("idAdmin", id_a);
-//				a=(AdminBean) query.uniqueResult();
-//				
-//				tx.commit();
-//			}catch(Exception ex){
-//				tx.rollback();
-//			}finally{
-//				session.close();
-//			}
-//			return a;
-//		}
-//
-//		
+		//2-Trova admin per username
+		public AdminBean trovaAdmin(String username)
+		{
+			AdminBean a=null;
+			Session session =HibernateUtil.openSession();
+			Transaction tx=null;
+
+			try{
+				tx=session.getTransaction();
+				tx.begin();
+
+
+				Query query= session.createQuery("from AdminBean where username=:user");
+				query.setString("user", username);
+				a=(AdminBean) query.uniqueResult();
+				
+				tx.commit();
+			}catch(Exception ex){
+				tx.rollback();
+			}finally{
+				session.close();
+			}
+			return a;
+		}
+
+		
 //		//3-Read tutti gli admin
 //		@SuppressWarnings("unchecked")
 //		public List<AdminBean> getAllAdmin() {

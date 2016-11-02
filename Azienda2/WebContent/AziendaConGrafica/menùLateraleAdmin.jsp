@@ -22,7 +22,7 @@
                         <li><a class="ajax-link" href="./ElencoDipendentiGrafica.jsp"><i class="glyphicon glyphicon-list-alt"></i><span> Elenco Dipendenti</span></a>
                         </li>
            
-                        <li><a href="./login.html"><i class="glyphicon glyphicon-lock"></i><span> Login Page</span></a>
+                        <li><a href="../doLogout.jsp"><i class="glyphicon glyphicon-lock"></i><span> Logout</span></a>
                         </li>
                     </ul>
                     
