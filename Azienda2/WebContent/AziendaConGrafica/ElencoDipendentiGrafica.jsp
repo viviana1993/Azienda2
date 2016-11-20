@@ -90,7 +90,7 @@
 										<td class="center"><c:out value="${dip.stipendio}" /></td>
 										<td class="center">
 
-											<form action="EditDipendente.jsp" method="post">
+											<form action="./EditDipendente.jsp" method="post">
 												<input type="hidden" name="id_utente"
 													value="${dip.id_utente}" />
 												<button type="submit" class="btn btn-info">

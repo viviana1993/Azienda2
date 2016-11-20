@@ -92,7 +92,7 @@
 										<td class="center"><c:out value="${cliente.p_iva}" /></td>
 										<td class="center">
 											
-											<form action="EditCliente.jsp" method="post">
+											<form action="./EditCliente.jsp" method="post">
 												<input type="hidden" name="id_utente"
 													value="${cliente.id_utente}"/> 
 												<button type="submit" class="btn btn-info">
