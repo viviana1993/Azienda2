@@ -42,7 +42,7 @@ public class DipendenteDao {
 	
 	
 	//2-Trova dipendente per username
-	public DipendenteBean trovaDipendente(String username)
+	public DipendenteBean getDipendente(long id)
 	{
 		DipendenteBean d=null;
 		Session session =HibernateUtil.openSession();
@@ -53,8 +53,8 @@ public class DipendenteDao {
 			tx.begin();
 
 
-			Query query= session.createQuery("from DipendenteBean where username=:user");
-			query.setString("user", username);
+			Query query= session.createQuery("from DipendenteBean where id_utente=:id");
+			query.setLong("id", id);
 			d=(DipendenteBean) query.uniqueResult();
 			
 			tx.commit();
@@ -95,7 +95,7 @@ public class DipendenteDao {
 	
 	
 	//4-Update dipendente
-	public boolean aggiornaDipendente(DipendenteBean dVecchio,DipendenteBean dNuovo) {
+	public boolean aggiornaDipendente(DipendenteBean d) {
 		boolean res=false;
 		Session session =HibernateUtil.openSession();
 		Transaction tx=null;
@@ -105,9 +105,14 @@ public class DipendenteDao {
 			tx=session.getTransaction();
 			tx.begin();
 			
-			Query query= session.createQuery("from DipendenteBean where username=:user");
-			query.setString("user", dVecchio.getUsername());
-			dV=(DipendenteBean) query.uniqueResult();
+			
+			dV=getDipendente(d.getId_utente());
+			dV.setNome(d.getNome());
+			dV.setCognome(d.getCognome());
+			dV.setUsername(d.getUsername());
+			dV.setPassword(d.getPassword());
+			dV.setPosizione(d.getPosizione());
+			dV.setStipendio(d.getStipendio());
 			session.update(dV);
 
 			res=true;

@@ -9,7 +9,7 @@
 <%@page import="javax.servlet.ServletException"%>
 
 <jsp:useBean id="dipendente" class="bean.DipendenteBean" scope="request"></jsp:useBean>
-<%-- <jsp:setProperty property="*" name="dipendente" /> --%>
+
 
 <jsp:useBean id="utente" class="bean.UtenteBean" scope="request"></jsp:useBean>
 <jsp:setProperty property="*" name="utente" />
@@ -17,12 +17,6 @@
 <%
 	ServizioAzienda sA= new ServizioAzienda();
 	
-    String nome= request.getParameter("nome");
-    String cognome= request.getParameter("cognome");
-    String username= request.getParameter("username");
-    String password= request.getParameter("password");
-    char ruolo='D';
-    String posizione= request.getParameter("posizione");
     String stipendio= request.getParameter("stipendio");
     double stipendio2=0;
     boolean error = false;
@@ -30,13 +24,13 @@
    	try
     {
     	stipendio2=Double.parseDouble(stipendio);
-    	dipendente.setNome(nome);
-	   	dipendente.setCognome(cognome);
-	   	dipendente.setPassword(password);
-	   	dipendente.setRuolo(ruolo);
-	   	dipendente.setPosizione(posizione);
+    	dipendente.setNome(request.getParameter("nome"));
+	   	dipendente.setCognome(request.getParameter("cognome"));
+	   	dipendente.setPassword(request.getParameter("password"));
+	   	dipendente.setRuolo('D');
+	   	dipendente.setPosizione(request.getParameter("posizione"));
 	   	dipendente.setStipendio(stipendio2);
-	   	dipendente.setUsername(username);
+	   	dipendente.setUsername(request.getParameter("username"));
     }
     catch (NumberFormatException e)
     {	
@@ -51,12 +45,12 @@
     {
 	   	
 	   	    
-	    if(dipendente.isValid() && !sA.trovaUser(username)) {
-	    	password=sA.conversionePass(password);
+	    if(dipendente.isValid() && sA.trovaUser(dipendente.getUsername())==null) {
+	    	String password=sA.conversionePass(dipendente.getPassword());
 	    	
 	    	
 	        sA.registraDipendente(dipendente);
-	        sA.creazioneRubrica(username);
+	        sA.creazioneRubrica(dipendente.getUsername());
 	    	
 	    	
 	    	String message = "Registrazione effettuata con successo";

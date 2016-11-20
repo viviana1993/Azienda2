@@ -3,6 +3,7 @@ package ServizioAzienda;
 import java.util.List;
 
 import model.Rubrica;
+import model.Voce;
 import utility.CodificationOfPassword;
 import bean.AdminBean;
 import bean.ClienteBean;
@@ -13,6 +14,7 @@ import dao.ClienteDao;
 import dao.DipendenteDao;
 import dao.RubricaDao;
 import dao.UtenteDao;
+import dao.VoceDao;
 
 
 
@@ -21,9 +23,9 @@ public class ServizioAzienda {
 	ClienteDao cDao=new ClienteDao();
 	DipendenteDao dDao=new DipendenteDao();
 	AdminDao adao= new AdminDao();
-
+	VoceDao vdao=new VoceDao();
 	RubricaDao rDao=new RubricaDao();
-//	VoceDao vdao= new VoceDao();
+
 
 //	//metodo per registrare  utente
 //		public boolean registraUtente(UtenteBean u) {
@@ -40,13 +42,28 @@ public class ServizioAzienda {
 		
 	}
 	
+	
 	//metodo per registrare dipendente
 		public boolean registraDipendente(DipendenteBean d){
 			
 			return dDao.creaDipendente(d);
 			
 		}
+	
+		//metodo per aggiornare cliente
 		
+		public boolean aggiornaCliente(ClienteBean cNuovo){
+			
+			return cDao.aggiornaCliente(cNuovo);
+			
+		}
+		//metodo per aggiornare dipendente
+		
+				public boolean aggiornaDip(DipendenteBean dNuovo){
+					
+					return dDao.aggiornaDipendente(dNuovo);
+					
+				}
 	
 	//metodo per registrare rubrica di un utente
 	
@@ -57,10 +74,9 @@ public class ServizioAzienda {
 	
 	//metodo per controllare se l'username è già presente
 	
-	public boolean trovaUser(String username){
+	public UtenteBean trovaUser(String username){
 		UtenteBean u=uDao.trovaUtente(username);
-		if(u==null) return false;
-		else return true;
+		return u;
 	}
 	
 	//metodo per convertire la password
@@ -69,14 +85,19 @@ public class ServizioAzienda {
 		return CodificationOfPassword.codificatePass(pass);
 	}
 	
-	//metodo per trovare utente tramite username
+	//metodo per trovare utente tramite id
 	
-	public UtenteBean trovaUtente(String username){
-		 UtenteBean uBean=uDao.trovaUtente(username);
+	public UtenteBean trovaUtenteConId(Long id){
+		 UtenteBean uBean=uDao.trovaUtenteId(id);
 		 return uBean;
 	}
 	
-		
+	//metodo per trovare cliente tramite id
+	
+		public ClienteBean trovaCliente(Long id){
+			 ClienteBean cBean=cDao.trovaClientePerId(id);
+			 return cBean;
+		}
 	//metodo per leggere elenco clienti
 	
 	public List<ClienteBean> getTuttiClienti(){
@@ -97,69 +118,64 @@ public class ServizioAzienda {
 			return a;
 		}
 		
-//		public ClienteBean leggiCliente(String username) {
-//			ClienteBean c =cDao.trovaCliente(username);
-//			return c;
-//		}
-//		
-//		public DipendenteBean leggiDipendente(String username) {
-//			DipendenteBean d =dDao.trovaDipendente(username);
-//			return d;
-//		}
-//		
-//		
-//		
-//		//metodo per cancellare
-//		public boolean eliminaUtenteESuaRubrica(UtenteBean uBean) {
-//			boolean bool=false;
-//			if(uBean.getRuolo()=='A')
-//			{
-//				return bool;
-//			}
-//			else if(uBean.getRuolo()=='C' || uBean.getRuolo()=='D'){
-//				Rubrica r=rDao.leggiRubricaConNome(uBean.getUsername());
-//				if(r!=null) {
-//				bool=rDao.rimuoviRubrica(r);
-//				}
-//				return bool=uDao.rimuoviUtente(uBean);
-//			}
-//			return bool;
-//			}
-//		
-//		
-//		//metodo per aggiungere una voce in rubrica
-//		public boolean registraVoce(Rubrica r,Voce v) {
-//			boolean result= false;
-//			v.setRubrica(r);
-//			r.aggiungiVoce(v);
-//			boolean b=vdao.creaVoce(v);
-//			rDao.aggiornaRubrica(r);
-//
-//			if(b==true)
-//			{
-//				result =true;
-//			}
-//
-//			return result;
-//
-//		}
-//
-//		//Metodo per trovare la rubrica di un utente tramiteusername
-//		public Rubrica trovaRubrica(String username) {
-//
-//			Rubrica r= rDao.leggiRubricaConNome(username);
-//
-//			return r;
-//		}
-//
-//		//metodo per prendere tutte le voci di rubrica
-//		public List<Voce> getAllVoci(Rubrica r) {
-//			List<Voce> voci = vdao.getVociRubrica(r);
-//
-//			return voci;
-//		}
-//
-//
+		public DipendenteBean trovaDipendente(long id) {
+			DipendenteBean d =dDao.getDipendente(id);
+			return d;
+		}
+		
+		
+		
+		//metodo per cancellare
+		public boolean eliminaUtenteESuaRubrica(UtenteBean uBean) {
+			boolean bool=false;
+			if(uBean.getRuolo()=='A')
+			{
+				return bool;
+			}
+			else if(uBean.getRuolo()=='C' || uBean.getRuolo()=='D'){
+				Rubrica r=rDao.leggiRubricaConNome(uBean.getUsername());
+				if(r!=null) {
+				bool=rDao.rimuoviRubrica(r);
+				}
+				return bool=uDao.rimuoviUtente(uBean);
+			}
+			return bool;
+			}
+		
+		
+		//metodo per aggiungere una voce in rubrica
+		public boolean registraVoce(Rubrica r,Voce v) {
+			boolean result= false;
+			v.setRubrica(r);
+			r.aggiungiVoce(v);
+			boolean b=vdao.creaVoce(v);
+			rDao.aggiornaRubrica(r);
+
+			if(b==true)
+			{
+				result =true;
+			}
+
+			return result;
+
+		}
+
+		//Metodo per trovare la rubrica di un utente tramite username
+		public Rubrica trovaRubrica(String username) {
+
+			Rubrica r= rDao.leggiRubricaConNome(username);
+
+			return r;
+		}
+
+		//metodo per prendere tutte le voci di rubrica
+		public List<Voce> getAllVoci(Rubrica r) {
+			List<Voce> voci = vdao.getVociRubrica(r);
+
+			return voci;
+		}
+
+
 //		//metodo per eliminare una voce
 //		public boolean eliminaVoce(Rubrica r, String nome, String cognome)
 //		{

@@ -38,14 +38,14 @@ I vari database disponibili sono in core-dialect. Oracle9 è deprecato e posso a
  <property name="show_sql">true</property>
 
 <!-- Drop and re-create the database schema on startup -->
- <property name="hbm2ddl.auto">create</property>
+ <property name="hbm2ddl.auto">update</property>
 
 
 <!-- Imposto il percorso dove si trova la classe dalla queale voglio che mi crei la tabella -->
+<mapping class="bean.UtenteBean" />
 <mapping class="bean.AdminBean" />
 <mapping class="bean.ClienteBean" />
 <mapping class="bean.DipendenteBean" />
-<mapping class="bean.UtenteBean" />
 <mapping class="model.Rubrica" />
 <mapping class="model.Voce" />
  </session-factory>

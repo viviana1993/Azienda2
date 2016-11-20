@@ -46,8 +46,8 @@ public class UtenteDao {
 
 
 
-	//2-Trova utente per username
-	public UtenteBean trovaUtente(String username)
+	//2-Trova utente per id
+	public UtenteBean trovaUtenteId(Long id_u)
 	{
 		UtenteBean u=null;
 		Session session =HibernateUtil.openSession();
@@ -58,8 +58,8 @@ public class UtenteDao {
 			tx.begin();
 
 
-			Query query= session.createQuery("from UtenteBean where username=:user");
-			query.setString("user", username);
+			Query query= session.createQuery("from UtenteBean where id_utente=:id");
+			query.setLong("id", id_u);
 			u=(UtenteBean) query.uniqueResult();
 
 			tx.commit();
@@ -71,7 +71,30 @@ public class UtenteDao {
 		return u;
 	}
 
+	//2-Trova utente per user
+		public UtenteBean trovaUtente(String user)
+		{
+			UtenteBean u=null;
+			Session session =HibernateUtil.openSession();
+			Transaction tx=null;
 
+			try{
+				tx=session.getTransaction();
+				tx.begin();
+
+
+				Query query= session.createQuery("from UtenteBean where username=:user");
+				query.setString("user", user);
+				u=(UtenteBean) query.uniqueResult();
+
+				tx.commit();
+			}catch(Exception ex){
+				tx.rollback();
+			}finally{
+				session.close();
+			}
+			return u;
+		}
 //	//3-Read tutti gli utenti
 //	@SuppressWarnings("unchecked")
 //	public List<UtenteBean> getAllUtenti() {
@@ -95,62 +118,33 @@ public class UtenteDao {
 //		}
 //		return utenti;
 //	}
-//
-//
-//
-//	//4-Update utente
-//	public boolean aggiornaUtente(UtenteBean uVecchio,UtenteBean uNuovo) {
-//		boolean res=false;
-//		Session session =HibernateUtil.openSession();
-//		Transaction tx=null;
-//		UtenteBean uV=null;
-//
-//		try{
-//			tx=session.getTransaction();
-//			tx.begin();
-//
-//			Query query= session.createQuery("from UtenteBean where username=:user");
-//			query.setString("user", uVecchio.getUsername());
-//			uV=(UtenteBean) query.uniqueResult();
-//
-//			session.update(uV);
-//
-//			res=true;
-//			tx.commit();
-//		}catch(Exception ex){
-//			tx.rollback();
-//		}finally{
-//			session.close();
-//		}
-//		return res;
-//
-//	}
-//
-//
-//
-//	//5-Delete
-//	public boolean rimuoviUtente(UtenteBean u) {
-//		boolean bool=false;
-//
-//		Session session =HibernateUtil.openSession();
-//		Transaction tx=null;
-//
-//		try{
-//			tx=session.getTransaction();
-//			tx.begin();
-//
-//			session.delete(u);
-//			bool=true;
-//
-//			tx.commit();
-//		}catch(Exception ex){
-//			tx.rollback();
-//		}finally{
-//			session.close();
-//		}
-//
-//		return bool;
-//	}
+
+	
+	
+	
+	//5-Delete
+	public boolean rimuoviUtente(UtenteBean u) {
+		boolean bool=false;
+
+		Session session =HibernateUtil.openSession();
+		Transaction tx=null;
+
+		try{
+			tx=session.getTransaction();
+			tx.begin();
+
+			session.delete(u);
+			bool=true;
+
+			tx.commit();
+		}catch(Exception ex){
+			tx.rollback();
+		}finally{
+			session.close();
+		}
+
+		return bool;
+	}
 
 
 }

@@ -14,7 +14,7 @@
 	ServizioAzienda sA= new ServizioAzienda();
 	
 	String username= request.getParameter("username");
-	UtenteBean uBean= sA.trovaUtente(username);
+	UtenteBean uBean= sA.trovaUser(username);
 	
 	String password=request.getParameter("password");
     String pass=sA.conversionePass(password);
@@ -25,9 +25,9 @@
 		utente.setNome(uBean.getNome());
 		utente.setCognome(uBean.getCognome());
 		utente.setRuolo(ruolo);
-		utente.setPassword(password);
+		utente.setPassword(uBean.getPassword());
 		utente.setId_utente(uBean.getId_utente());
-		utente.setUsername(username);
+		utente.setUsername(uBean.getUsername());
 		
 		switch(ruolo){
 		case 'A':

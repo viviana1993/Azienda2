@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import bean.ClienteBean;
+import bean.DipendenteBean;
 
 
 
@@ -70,6 +71,34 @@ public class ClienteDao {
 			}
 
 			
+			
+			//2-Trova cliente per id
+			public ClienteBean trovaClientePerId(Long id_c)
+			{
+				ClienteBean c=null;
+				Session session =HibernateUtil.openSession();
+				Transaction tx=null;
+
+				try{
+					tx=session.getTransaction();
+					tx.begin();
+
+
+					Query query= session.createQuery("from ClienteBean where id_utente=:id");
+					query.setLong("id", id_c);
+					c=(ClienteBean) query.uniqueResult();
+					
+					tx.commit();
+				}catch(Exception ex){
+					tx.rollback();
+				}finally{
+					session.close();
+				}
+				return c;
+			}
+
+			
+			
 			//3-Read tutti i clienti
 			
 			@SuppressWarnings("unchecked")
@@ -98,35 +127,44 @@ public class ClienteDao {
 			
 			
 			
-//			//4-Update cliente
-//			public boolean aggiornaCliente(ClienteBean cVecchio,ClienteBean cNuovo) {
-//				boolean res=false;
-//				Session session =HibernateUtil.openSession();
-//				Transaction tx=null;
-//				ClienteBean cV=null;
-//				
-//				try{
-//					tx=session.getTransaction();
-//					tx.begin();
-//					
-//					Query query= session.createQuery("from ClienteBean where username=:user");
-//					query.setString("user", cVecchio.getUsername());
-//					cV=(ClienteBean) query.uniqueResult();
-//					session.update(cV);
-//
-//					res=true;
-//					tx.commit();
-//				}catch(Exception ex){
-//					tx.rollback();
-//				}finally{
-//					session.close();
-//				}
-//				return res;
-//
-//			}
-//			
-//			
-//			
+			//4-Update cliente
+			public boolean aggiornaCliente(ClienteBean cBean) {
+				boolean res=false;
+				
+				Session session =HibernateUtil.openSession();
+				Transaction tx=null;
+				ClienteBean cV=null;
+				
+				try{
+					tx=session.getTransaction();
+					tx.begin(); 
+					//session.update(Long.toString(cV.getId_utente()),cBean);
+					
+					cV=trovaClientePerId(cBean.getId_utente());
+					cV.setNome(cBean.getNome());
+					cV.setCognome(cBean.getCognome());
+					cV.setUsername(cBean.getUsername());
+					cV.setPassword(cBean.getPassword());
+					cV.setRagioneSociale(cBean.getRagioneSociale());
+					cV.setP_iva(cBean.getP_iva());
+					
+					session.update(cV);
+					
+					res=true;
+					tx.commit();
+				}catch(Exception ex){
+					tx.rollback();
+				}finally{
+					session.close();
+				}
+				
+				
+				return res;
+
+			}
+			
+			
+			
 //			//5-Delete
 //			public boolean rimuoviCliente(ClienteBean c) {
 //				boolean bool=false;

@@ -5,7 +5,6 @@
     pageEncoding="ISO-8859-1"%>
     
 <jsp:useBean id="cliente" class="bean.ClienteBean" scope="request"></jsp:useBean>
-	<jsp:setProperty property="*" name="cliente"/>
 	
 	<jsp:useBean id="utente" class="bean.UtenteBean" scope="request"></jsp:useBean>
 	<jsp:setProperty property="*" name="utente"/>
@@ -15,17 +14,17 @@
 
 	<%
 	ServizioAzienda sA= new ServizioAzienda();
-
+	
     cliente.setNome(request.getParameter("nome"));
     cliente.setCognome(request.getParameter("cognome"));
-    cliente.setUsername(request.getParameter("username"));
+   	cliente.setUsername(request.getParameter("username"));
     cliente.setPassword(request.getParameter("password"));
     cliente.setRuolo('C');
     cliente.setRagioneSociale(request.getParameter("ragioneSociale"));
     cliente.setP_iva(request.getParameter("p_iva"));
     
     
-    if(cliente.isValid() && !sA.trovaUser(cliente.getUsername())) {
+    if(cliente.isValid() && sA.trovaUser(cliente.getUsername())==null) {
     	String pass=sA.conversionePass(cliente.getPassword());
     
     	cliente.setPassword(pass);

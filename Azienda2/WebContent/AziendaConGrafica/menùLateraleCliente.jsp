@@ -12,7 +12,7 @@
                         <li class="nav-header">Main</li>
                         <li><a class="ajax-link" href="./HomePageCliente.jsp"><i class="glyphicon glyphicon-home"></i><span> Home</span></a>
                         </li>
-                        <li><a class="ajax-link" href="#"><i class="glyphicon glyphicon-plus"></i><span>Nuova Voce</span></a>
+                        <li><a class="ajax-link" href="./RegistraVoce.jsp"><i class="glyphicon glyphicon-plus"></i><span>Nuova Voce</span></a>
                         </li>
                        
                        <li><a class="ajax-link" href="#"><i class="glyphicon glyphicon-list-alt"></i><span> Elenco Voci</span></a>

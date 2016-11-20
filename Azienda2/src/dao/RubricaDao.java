@@ -123,7 +123,7 @@ public class RubricaDao {
 
 
 			Session session=HibernateUtil.openSession();
-
+			Rubrica rV=null;
 			Transaction tx=null;
 
 			try{
@@ -131,8 +131,10 @@ public class RubricaDao {
 				tx=session.getTransaction();
 
 				tx.begin();
-
-				session.update(r); 
+				rV=leggiRubricaConId(r.getId_Rubrica());
+				rV.setNome(r.getNome());
+				rV.setVoci(r.getVoci());
+				session.update(rV); 
 
 
 				tx.commit(); 
